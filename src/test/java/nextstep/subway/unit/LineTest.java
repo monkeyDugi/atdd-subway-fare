@@ -3,6 +3,7 @@ package nextstep.subway.unit;
 import nextstep.subway.domain.Line;
 import nextstep.subway.domain.Section;
 import nextstep.subway.domain.Station;
+import nextstep.subway.ui.exception.LineException;
 import nextstep.subway.ui.exception.SectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ class LineTest {
         증미역 = new Station("증미역");
         등촌역 = new Station("등촌역");
         신목동역 = new Station("신목동역");
-        line = new Line("9호선", "금색");
+        line = new Line("9호선", "금색", 900);
         tenDistance = 10;
         fourDistance = 4;
         fiveDuration = 5;
@@ -173,10 +174,40 @@ class LineTest {
         line.addSection(section);
 
         // when
-        line.updateLine("5호선", "보라색");
+        line.updateLine("5호선", "보라색", 0);
 
         // then
         assertThat(line.getName()).isEqualTo("5호선");
         assertThat(line.getColor()).isEqualTo("보라색");
+        assertThat(line.getAdditionFare()).isEqualTo(0);
+//        추가 요금은 최소 0원 이상이어야 합니다."
+    }
+
+    @DisplayName("노선 정보 변경 - 노선 수정 시 추가 요금 최소값 예외")
+    @Test
+    void exceptionUpdateAddFareMin() {
+        // given
+        Section section = new Section(line, 가양역, 증미역, tenDistance, fiveDuration);
+        line.addSection(section);
+
+        // when
+        assertThatThrownBy(() -> line.updateLine("5호선", "보라색", -1))
+                // then
+                .isInstanceOf(LineException.class)
+                .hasMessage("추가 요금은 최소 0원 이상이어야 합니다.");
+    }
+
+    @DisplayName("노선 정보 변경 - 노선 생성 시 추가 요금 최소값 예외")
+    @Test
+    void exceptionSaveAddFareMin() {
+        // given
+        Section section = new Section(line, 가양역, 증미역, tenDistance, fiveDuration);
+        line.addSection(section);
+
+        // when
+        assertThatThrownBy(() -> new Line("5호선", "보라색", -1))
+                // then
+                .isInstanceOf(LineException.class)
+                .hasMessage("추가 요금은 최소 0원 이상이어야 합니다.");
     }
 }
