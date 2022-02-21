@@ -54,8 +54,8 @@ class PathServiceTest {
         양재역 = new Station("양재역");
         남부터미널역 = new Station("남부터미널역");
 
-        이호선 = new Line("2호선", "green");
-        삼호선 = new Line("3호선", "orange");
+        이호선 = new Line("2호선", "green", 900);
+        삼호선 = new Line("3호선", "orange", 1_000);
         신분당선 = new Line("신분당선", "red");
 
         교대역_강남역_구간 = new Section(이호선, 교대역, 강남역, 10, 3);
@@ -91,5 +91,6 @@ class PathServiceTest {
                 StationResponse.createStationResponse(양재역));
         assertThat(path.getDistance()).isEqualTo(5);
         assertThat(path.getDuration()).isEqualTo(21);
+        assertThat(path.getFare()).isEqualTo(2_250);
     }
 }

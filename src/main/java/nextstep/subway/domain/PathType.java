@@ -24,11 +24,11 @@ public enum PathType {
     public PathResponse createPathResponse(List<Station> pathStations, int weight, Lines lines) {
         PathType pathType = valueOf(name());
         if (pathType == DISTANCE) {
-            Fare fare = new Fare(weight);
+            Fare fare = Fare.createFare(weight, lines.getAdditionFare());
             return new PathResponse(pathStations, weight, lines.pathTotalDuration(pathStations), fare.calculateOverFare());
         }
         int distance = lines.pathTotalDistance(pathStations);
-        Fare fare = new Fare(distance);
+        Fare fare = Fare.createFare(distance, lines.getAdditionFare());
         return new PathResponse(pathStations,lines.pathTotalDistance(pathStations), weight, fare.calculateOverFare());
     }
 }

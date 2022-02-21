@@ -14,14 +14,14 @@ public enum FareStandard {
         this.basicFare = basicFare;
     }
 
-    public static int calculateOverFare(int distance) {
+    public static int calculateOverFare(int distance, int additionFare) {
         FareStandard fareStandard = of(distance);
         if (distance <= fareStandard.boundary) {
-            return fareStandard.basicFare;
+            return fareStandard.basicFare + additionFare;
         }
 
         int overDistance = distance - fareStandard.boundary;
-        return ((overDistance - 1) / fareStandard.distance + 1) * 100 + fareStandard.basicFare;
+        return ((overDistance - 1) / fareStandard.distance + 1) * 100 + fareStandard.basicFare + additionFare;
         // 이런 힌트를 주셨는데 뭐지?
 //        return (int) ((ceil((overDistance - 1) / 5) + 1) * 100) + BASIC_FARE;
     }

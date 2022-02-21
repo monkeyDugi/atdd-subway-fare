@@ -24,6 +24,13 @@ public class Lines {
                 .sum();
     }
 
+    public int getAdditionFare() {
+        return lines.stream()
+                .mapToInt(Line::getAdditionFare)
+                .max()
+                .getAsInt();
+    }
+
     public Set<Station> getStations() {
         Set<Station> stations = new HashSet<>();
         for (Line line : lines) {

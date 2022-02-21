@@ -12,7 +12,7 @@ class FareTest {
     @Test
     void calculateFare() {
         // given
-        Fare fare = new Fare(10);
+        Fare fare = Fare.createNonAdditionFareFare(10);
 
         // when
         int fareCal = fare.calculateOverFare();
@@ -25,7 +25,7 @@ class FareTest {
     @Test
     void calculateOverFare15() {
         // given
-        Fare fare = new Fare(15);
+        Fare fare = Fare.createNonAdditionFareFare(15);
 
         // when
         int fareCalOver = fare.calculateOverFare();
@@ -38,7 +38,7 @@ class FareTest {
     @Test
     void calculateOverFare16() {
         // given
-        Fare fare = new Fare(16);
+        Fare fare = Fare.createNonAdditionFareFare(16);
 
         // when
         int fareCalOver = fare.calculateOverFare();
@@ -51,7 +51,7 @@ class FareTest {
     @Test
     void calculateOverFare50() {
         // given
-        Fare fare = new Fare(50);
+        Fare fare = Fare.createNonAdditionFareFare(50);
 
         // when
         int fareCalOver = fare.calculateOverFare();
@@ -64,7 +64,7 @@ class FareTest {
     @Test
     void calculateOverFare58() {
         // given
-        Fare fare = new Fare(58);
+        Fare fare = Fare.createNonAdditionFareFare(58);
 
         // when
         int fareCalOver = fare.calculateOverFare();
@@ -77,12 +77,25 @@ class FareTest {
     @Test
     void calculateOverFare59() {
         // given
-        Fare fare = new Fare(59);
+        Fare fare = Fare.createNonAdditionFareFare(59);
 
         // when
         int fareCalOver = fare.calculateOverFare();
 
         // then
         assertThat(fareCalOver).isEqualTo(2_250);
+    }
+
+    @DisplayName("추가 요금이 있는 경우")
+    @Test
+    void calculateAdditionFare() {
+        // given
+        Fare fare = Fare.createFare(59, 900);
+
+        // when
+        int fareCalOver = fare.calculateOverFare();
+
+        // then
+        assertThat(fareCalOver).isEqualTo(3_150);
     }
 }

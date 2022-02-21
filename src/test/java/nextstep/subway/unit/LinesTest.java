@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,6 +60,16 @@ class LinesTest {
         신분당선.addSection(강남역_양재역_구간);
         삼호선.addSection(남부터미널역_양재역_구간);
         삼호선.addSection(교대역_남부터미널역_구간);
+    }
+
+    @Test
+    void getAdditionFare() {
+        Line 구호선 = new Line("구호선", "갈색", 900);
+        Lines lines = new Lines(Arrays.asList(이호선, 신분당선, 삼호선, 구호선));
+
+        int additionFare = lines.getAdditionFare();
+
+        assertThat(additionFare).isEqualTo(900);
     }
 
     @DisplayName("경로 찾기 시 시간 or 거리 중 기준이 아닌 시간 or 거리의 총합 반환")
